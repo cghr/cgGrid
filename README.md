@@ -1,4 +1,4 @@
-# cgForm - Directives for rendering HTML standard forms and survey forms  from a  Json Schema.
+# cgForm - Directives for Grid
 
 ***
 
