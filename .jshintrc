@@ -1,9 +1,10 @@
 {
-    "curly": true,
+    "curly": false,
     "immed": true,
     "noarg": true,
     "sub": true,
     "boss": true,
+    "asi":true,
     "eqnull": true,
     "quotmark": "single",
     "expr": true,

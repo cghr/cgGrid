@@ -9,8 +9,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-ngmin');
   grunt.loadNpmTasks('grunt-conventional-changelog');
   grunt.loadNpmTasks('grunt-ngdocs');
+
 
   // Project configuration.
   grunt.util.linefeed = '\n';
@@ -89,6 +91,22 @@ module.exports = function(grunt) {
         }]
       }
     },
+    /**
+         * 'ng-min' annotates the sources before minifying. That is, it allows us
+         * to code without the array syntax.
+         */
+       ngmin: {
+            compile: {
+                files: [
+                    {
+                        src: [ '<%=dist%>/*.js' ],
+                        cwd: '',
+                        dest: '',
+                        expand: true
+                    }
+                ]
+            }
+        },
     uglify: {
       options: {
         banner: '<%= meta.banner %>'
@@ -196,7 +214,7 @@ module.exports = function(grunt) {
   //register before and after test tasks so we've don't have to change cli
   //options on the goole's CI server
   grunt.registerTask('before-test', ['enforce', 'jshint', 'html2js']);
-  grunt.registerTask('after-test', ['build', 'copy']);
+  grunt.registerTask('after-test', ['build','copy']);
 
   //Rename our watch task to 'delta', then make actual 'watch'
   //task build things, then start test server
@@ -338,7 +356,7 @@ module.exports = function(grunt) {
     grunt.config('concat.dist_tpls.src', grunt.config('concat.dist_tpls.src')
       .concat(srcFiles).concat(tpljsFiles));
 
-    grunt.task.run(['concat', 'uglify']);
+    grunt.task.run(['concat','ngmin', 'uglify']);
   });
 
   grunt.registerTask('test', 'Run tests on singleRun karma server', function() {

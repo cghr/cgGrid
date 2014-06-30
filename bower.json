@@ -14,7 +14,8 @@
     "tests"
   ],
   "devDependencies": {
-    "angular": "~1.2.15"
+    "angular": "~1.2.15",
+    "lodash": "~2.4.1"
   },
   "dependencies": {
     "gridLib": "~0.0.1"

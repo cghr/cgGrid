@@ -1,22 +1,16 @@
-angular.module('cgGrid.jsonUtil', [])
-    .factory('JsonUtil', function() {
+angular.module('cgGrid.jsonUtil', ['cgGrid.lodash'])
+    .factory('JsonUtil', function (_) {
 
-        // Public API here
+        function transformJsonArray(jsonArray) {
+
+            var i = 0;
+            return _.map(jsonArray, function (obj) {
+                return { id: i++, data: _.values(obj) }
+            })
+
+        }
+
         return {
-            jsonToArray: function(jsonArray) {
-                var jsArray = [];
-                var i = 0;
-                angular.forEach(jsonArray, function(jsonObject) {
-                    var innerArray = [];
-                    angular.forEach(jsonObject, function(value) {
-                        innerArray.push(value);
-                    });
-                    jsArray.push({
-                        id: i++,
-                        data: innerArray
-                    });
-                });
-                return jsArray;
-            }
+            jsonToArray: transformJsonArray(jsonArray)
         };
     });

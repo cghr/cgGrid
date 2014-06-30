@@ -1,0 +1,1 @@
+angular.module('cgGrid.lodash').constant('_', window._);

@@ -28,7 +28,7 @@ describe('Service: GridConfig', function () {
             height: '300px',
             autoUpdate: false,
             autoUpdateInterval: 10000,
-            imagePath: 'assets/imgs/',
+            imagePath: 'assets/dhtmlx/imgs/',
             skin: 'modern',
             pagingSkin: 'bricks',
             paging: true,
