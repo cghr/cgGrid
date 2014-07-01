@@ -36,7 +36,7 @@ angular.module('cgGrid.autoUpdateRunner', ['cgGrid.service'])
         return {
             startAutoUpdate: startAutoUpdate,
             checkForUpdates: checkForUpdates,
-            killAutoUpdates: killAutoUpdate
+            killAutoUpdate: killAutoUpdate
 
         }
 

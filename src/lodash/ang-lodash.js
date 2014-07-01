@@ -1,1 +1,1 @@
-angular.module('cgGrid.lodash').constant('_', window._);
+angular.module('cgGrid.lodash',[]).constant('_', window._);

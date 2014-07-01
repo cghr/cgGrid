@@ -1,56 +1,36 @@
-// base path, that will be used to resolve files and exclude
-basePath = '.';
+module.exports = function(config){
+    config.set({
 
-// list of files / patterns to load in the browser
-files = [
-    JASMINE,
-    JASMINE_ADAPTER,
-    'misc/test-lib/jquery-1.8.2.min.js',
-    'misc/test-lib/angular.js',
-    'misc/test-lib/angular-mocks.js',
-    'bower_components/gridLib/release/scripts/dhtmlx.js',
-    'misc/test-lib/helpers.js',
-    'src/**/*.js',
-    'template/**/*.js'
-];
+        basePath : '.',
 
-// list of files to exclude
-exclude = [
-    'src/**/docs/*'
-];
+        files : [
+            'misc/test-lib/jquery-1.8.2.min.js',
+            'misc/test-lib/angular.js',
+            'misc/test-lib/angular-mocks.js',
+            'bower_components/gridLib/release/scripts/dhtmlx.js',
+            'bower_components/lodash/dist/lodash.js',
+            'misc/test-lib/helpers.js',
+            'src/**/*.js',
+            'template/**/*.js'
+        ],
 
-// Start these browsers, currently available:
-// - Chrome
-// - ChromeCanary
-// - Firefox
-// - Opera
-// - Safari
-// - PhantomJS
-browsers = [
-    'Chrome'
-];
+        autoWatch : true,
 
-// test results reporter to use
-// possible values: dots || progress
-reporters = ['progress'];
+        frameworks: ['jasmine'],
 
-// web server port
-port = 9018;
+        browsers : ['Firefox'],
 
-// cli runner port
-runnerPort = 9100;
+        plugins : [
+            'karma-chrome-launcher',
+            'karma-firefox-launcher',
+            'karma-jasmine',
+            'karma-junit-reporter'
+        ],
 
-// enable / disable colors in the output (reporters and logs)
-colors = true;
+        junitReporter : {
+            outputFile: 'test_out/unit.xml',
+            suite: 'unit'
+        }
 
-// level of logging
-// possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-logLevel = LOG_INFO;
-
-// enable / disable watching file and executing tests whenever any file changes
-autoWatch = false;
-
-// Continuous Integration mode
-// if true, it capture browsers, run tests and exit
-singleRun = false;
-
+    });
+};

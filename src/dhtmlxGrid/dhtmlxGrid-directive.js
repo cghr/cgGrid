@@ -14,7 +14,7 @@ angular.module('cgGrid.dhtmlxGrid', ['cgGrid.config', 'cgGrid.service', 'cgGrid.
                     pagingElement: childNodes[1]
                 }
                 _.extend(config, GridConfig)
-                _.isUndefined(scope.options) ? GridUtil.remoteInitialize(config) : GridUtil.resolveLocalInitialize(config)
+                _.isUndefined(scope.options) ? GridUtil.remoteInitialize(config,scope) : GridUtil.resolveLocalInitialize(config,scope)
 
                 if (config.autoUpdate === true)
                     AutoUpdateRunner.startAutoUpdate(scope, config)
@@ -25,7 +25,7 @@ angular.module('cgGrid.dhtmlxGrid', ['cgGrid.config', 'cgGrid.service', 'cgGrid.
                 scope.$watch('gridRows', function () {
 
                     if (config.autoUpdate === true && _.isUndefined(scope.options))
-                        GridUtil.remoteInitialize(config)
+                        GridUtil.remoteInitialize(config,scope)
 
                 })
                 /*
