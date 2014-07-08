@@ -1,7 +1,7 @@
 angular.module('cgGrid.service', ['cgGrid.config'])
     .factory('GridService', function (GridConfig, $http, $location) {
 
-        var getData = function () {
+        function getData() {
             var gridBaseUrl = GridConfig.getGridServiceBaseUrl()
             var currentLocation = $location.url()
 

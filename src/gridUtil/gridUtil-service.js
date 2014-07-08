@@ -1,7 +1,7 @@
 angular.module('cgGrid.GridUtil', ['cgGrid.service', 'cgGrid.jsonUtil'])
     .factory('GridUtil', function (GridService, $compile, JsonUtil) {
 
-        var renderGrid = function (config, scope) {
+        function renderGrid(config, scope) {
 
             config.gridElement.style.height = config.height
             config.gridElement.style.width = config.width
@@ -21,12 +21,12 @@ angular.module('cgGrid.GridUtil', ['cgGrid.service', 'cgGrid.jsonUtil'])
             $compile(angular.element(config.gridElement).contents())(scope)
         }
 
-        var remoteInitialize = function (config, scope) {
+        function remoteInitialize(config, scope) {
 
 
             var self = this
             var success = function (resp) {
-                angular.extend(config, resp.data)
+                _.extend(config, resp.data)
                 self.renderGrid(config, scope)
             }
             var fail = function () {
@@ -38,14 +38,14 @@ angular.module('cgGrid.GridUtil', ['cgGrid.service', 'cgGrid.jsonUtil'])
 
         }
 
-        var resolveLocalInitialize = function (config, scope) {
+        function resolveLocalInitialize(config, scope) {
 
             _.extend(config, scope.options)
             _.isUndefined(scope.options.data) ? this.remoteInitialize(config, scope) : this.resolveDataFormatAndRenderGrid(config, scope)
 
         }
 
-        var resolveDataFormatAndRenderGrid = function (config, scope) {
+        function resolveDataFormatAndRenderGrid(config, scope) {
 
             if (_.isArray(config.data))
                 config.data = {rows: JsonUtil.jsonToArray(config.data)}
@@ -63,7 +63,7 @@ angular.module('cgGrid.GridUtil', ['cgGrid.service', 'cgGrid.jsonUtil'])
             /* Downloads config and data remotely and renders grid */
             remoteInitialize: remoteInitialize,
 
-            /* Resolve local data format */
+            /* Resolve local data format and initialize grid */
             resolveLocalInitialize: resolveLocalInitialize,
 
             /* Resolve data format to jsArray or json to render grid */

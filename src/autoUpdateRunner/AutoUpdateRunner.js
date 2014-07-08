@@ -1,21 +1,24 @@
 angular.module('cgGrid.autoUpdateRunner', ['cgGrid.service'])
     .factory('AutoUpdateRunner', function ($log, $interval, GridService) {
 
-        var startAutoUpdate = function (scope, config) {
+        function startAutoUpdate(scope, config) {
 
             $log.info('started auto update')
             var self = this
+            var updateInterval = config.autoUpdateInterval
+
             scope.intervalPromise = $interval(function () {
                 self.checkForUpdates(scope)
-            }, config.autoUpdateInterval)
+            }, updateInterval)
 
         }
 
-        var checkForUpdates = function (scope) {
+        function checkForUpdates(scope) {
 
             $log.info('checking for updates')
             var done = function (resp) {
-                scope.gridRows = resp.data.data.rows.length
+                var httpResp = resp.data
+                scope.gridRows = httpResp.data.rows.length
             }
             var fail = function () {
                 $log.error('Error while fetching data ')
@@ -24,12 +27,12 @@ angular.module('cgGrid.autoUpdateRunner', ['cgGrid.service'])
 
         }
 
-        var killAutoUpdate = function (scope) {
+        function killAutoUpdate(scope) {
 
             $log.info('killed auto update')
-            if ($interval.cancel(scope.intervalPromise) === false) {
+            if ($interval.cancel(scope.intervalPromise) === false)
                 throw 'Failed to Cancel $interval'
-            }
+
 
         }
 

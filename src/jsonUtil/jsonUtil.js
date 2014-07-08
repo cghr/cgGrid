@@ -1,7 +1,7 @@
 angular.module('cgGrid.jsonUtil', ['cgGrid.lodash'])
     .factory('JsonUtil', function (_) {
 
-        var transformJsonArray=function (jsonArray) {
+        function transformJsonArray(jsonArray) {
 
             var i = 0;
             return _.map(jsonArray, function (obj) {
