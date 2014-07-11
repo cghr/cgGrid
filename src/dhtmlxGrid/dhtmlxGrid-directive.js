@@ -9,10 +9,11 @@ angular.module('cgGrid.dhtmlxGrid', ['cgGrid.config', 'cgGrid.jsonUtil', 'cgGrid
                 gridElement: childNodes[0],
                 pagingElement: childNodes[1]
             }
+
             _.extend(config, GridConfig)
             _.isUndefined(scope.options) ? GridUtil.remoteInitialize(config, scope) : GridUtil.resolveLocalInitialize(config, scope)
 
-            if (config.autoUpdate === true)
+            if (config.autoUpdate)
                 AutoUpdateRunner.startAutoUpdate(scope, config)
 
             /*
@@ -20,7 +21,7 @@ angular.module('cgGrid.dhtmlxGrid', ['cgGrid.config', 'cgGrid.jsonUtil', 'cgGrid
              */
             scope.$watch('gridRows', function () {
 
-                if (config.autoUpdate === true && _.isUndefined(scope.options))
+                if (config.autoUpdate && _.isUndefined(scope.options))
                     GridUtil.remoteInitialize(config, scope)
 
             })
@@ -29,7 +30,7 @@ angular.module('cgGrid.dhtmlxGrid', ['cgGrid.config', 'cgGrid.jsonUtil', 'cgGrid
              */
             scope.$on('$destroy', function () {
 
-                if (config.autoUpdate === true)
+                if (config.autoUpdate)
                     AutoUpdateRunner.killAutoUpdate(scope)
 
                 $log.info('killed auto update')

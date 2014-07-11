@@ -12,25 +12,24 @@ angular.module('cgGrid.autoUpdateRunner', ['cgGrid.gridFactory'])
             }, updateInterval)
 
         }
-        
+
 
         function checkForUpdates(scope) {
 
             $log.info('checking for updates')
+            GridFactory.getData().then(success)
 
             function success() {
                 scope.gridRows = (GridFactory.data).data.rows.length
             }
-
-            GridFactory.getData().then(success)
 
         }
 
         function killAutoUpdate(scope) {
 
             $log.info('killed auto update')
-            if ($interval.cancel(scope.intervalPromise) === false)
-                throw 'Failed to Cancel $interval'
+            if (!$interval.cancel(scope.intervalPromise))
+                $log.error('Failed to cancel interval');
 
 
         }

@@ -17,7 +17,7 @@ angular.module('cgGrid.gridFactory', ['cgGrid.config'])
 
             return $http.get(dataUrl).success(success).error(err)
         }
-
+        
         return GridFactory
 
     })

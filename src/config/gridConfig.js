@@ -1,5 +1,5 @@
 angular.module('cgGrid.config', ['cgGrid.lodash'])
-    .factory('GridConfig', function ($rootScope, _) {
+    .factory('GridConfig', function () {
 
 
         return {

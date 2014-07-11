@@ -3,15 +3,10 @@ angular.module('cgGrid.jsonUtil', ['cgGrid.lodash'])
 
         function transformJsonArray(jsonArray) {
 
-            var i = 0;
-            return _.map(jsonArray, function (obj) {
-
-                return { id: i++, data: _.values(obj) }
+            return _.map(jsonArray, function (obj, index) {
+                return { id: index++, data: _.values(obj) }
             })
-
         }
 
-        return {
-            jsonToArray: transformJsonArray
-        };
+        return { jsonToArray: transformJsonArray }
     });

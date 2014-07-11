@@ -5,8 +5,7 @@ describe('Service: GridConfig', function () {
 
     // instantiate service
     var GridConfig, $rootScope
-    beforeEach(inject(function ($rootScope, _GridConfig_) {
-        $rootScope = $rootScope
+    beforeEach(inject(function (_GridConfig_) {
         GridConfig = _GridConfig_
 
     }))

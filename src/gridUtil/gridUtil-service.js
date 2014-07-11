@@ -9,15 +9,18 @@ angular.module('cgGrid.GridUtil', ['cgGrid.gridFactory', 'cgGrid.jsonUtil'])
 
             var grid = new dhtmlXGridObject(config.gridElement)
 
-            grid.setImagePath(config.imagePath)
-            grid.enablePaging(config.paging, config.recordsPerPage, 5, config.pagingElement, true)
-            grid.setPagingSkin(config.pagingSkin)
-            grid.setSkin(config.skin)
-            grid.setHeader(config.headings)
-            grid.attachHeader(config.filters)
-            grid.setColSorting(config.sortings || '')
-            grid.init()
-            grid.parse(config.data, 'json')
+            with (grid) {
+                setImagePath(config.imagePath)
+                enablePaging(config.paging, config.recordsPerPage, 5, config.pagingElement, true)
+                setPagingSkin(config.pagingSkin)
+                setSkin(config.skin)
+                setHeader(config.headings)
+                attachHeader(config.filters)
+                setColSorting(config.sortings || '')
+                init()
+                parse(config.data, 'json')
+            }
+
             $compile(angular.element(config.gridElement).contents())(scope)
         }
 
