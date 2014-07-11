@@ -1,5 +1,5 @@
-angular.module('cgGrid.dhtmlxGrid', ['cgGrid.config', 'cgGrid.service', 'cgGrid.jsonUtil', 'cgGrid.GridUtil', 'cgGrid.lodash', 'cgGrid.autoUpdateRunner'])
-    .directive('dhtmlxGrid', function (GridConfig, GridService, $compile, JsonUtil, $interval, $log, GridUtil, AutoUpdateRunner, _) {
+angular.module('cgGrid.dhtmlxGrid', ['cgGrid.config', 'cgGrid.jsonUtil', 'cgGrid.GridUtil', 'cgGrid.lodash', 'cgGrid.autoUpdateRunner'])
+    .directive('dhtmlxGrid', function (GridConfig, $compile, JsonUtil, $interval, $log, GridUtil, AutoUpdateRunner, _) {
 
 
         function postLink(scope, element) {

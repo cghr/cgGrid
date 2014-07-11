@@ -1,5 +1,5 @@
-angular.module('cgGrid.GridUtil', ['cgGrid.service', 'cgGrid.jsonUtil'])
-    .factory('GridUtil', function (GridService, $compile, JsonUtil) {
+angular.module('cgGrid.GridUtil', ['cgGrid.gridFactory', 'cgGrid.jsonUtil'])
+    .factory('GridUtil', function (GridFactory, $compile, JsonUtil) {
 
         function renderGrid(config, scope) {
 
@@ -23,17 +23,12 @@ angular.module('cgGrid.GridUtil', ['cgGrid.service', 'cgGrid.jsonUtil'])
 
         function remoteInitialize(config, scope) {
 
-
             var self = this
-            var success = function (resp) {
-                _.extend(config, resp.data)
+            var success = function () {
+                _.extend(config, GridFactory.data)
                 self.renderGrid(config, scope)
             }
-            var fail = function () {
-                $log.error('Grid Service:Failed to fetch data from server')
-
-            }
-            GridService.getData().then(success, fail)
+            GridFactory.getData().then(success)
 
 
         }
@@ -51,6 +46,7 @@ angular.module('cgGrid.GridUtil', ['cgGrid.service', 'cgGrid.jsonUtil'])
                 config.data = {rows: JsonUtil.jsonToArray(config.data)}
 
             this.renderGrid(config, scope)
+
 
         }
 

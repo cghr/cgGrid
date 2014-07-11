@@ -5,6 +5,7 @@ angular.module('cgGrid.jsonUtil', ['cgGrid.lodash'])
 
             var i = 0;
             return _.map(jsonArray, function (obj) {
+
                 return { id: i++, data: _.values(obj) }
             })
 

@@ -1,7 +1,6 @@
 describe('Directive: dhtmlxGrid', function () {
 
-    var fakeServiceBaseUrl = 'http://fakeServer/';
-    var dataUrl = fakeServiceBaseUrl + 'api/GridService/country';
+    var dataUrl = 'api/GridService/country';
 
     var element,
         scope, gridData, compile, deferred, q;
@@ -19,18 +18,19 @@ describe('Directive: dhtmlxGrid', function () {
 
 
     // load the directive's module
-    beforeEach(angular.mock.module('cgGrid.service'));
+    beforeEach(angular.mock.module('cgGrid.gridFactory'));
     beforeEach(module('cgGrid.dhtmlxGrid'));
 
     beforeEach(function () {
         module(function ($provide) {
 
-            var mockGridService = {getData: function () {
+            var mockGridFactory = {getData: function () {
                 deferred = q.defer();
-                deferred.resolve(mockResponse);
+                mockGridFactory.data = mockResponse.data
+                deferred.resolve(mockGridFactory.data);
                 return deferred.promise;
             }};
-            $provide.value('GridService', mockGridService);
+            $provide.value('GridFactory', mockGridFactory);
         });
     });
 
@@ -163,17 +163,16 @@ describe('Directive: dhtmlxGrid', function () {
 });
 describe('Dhtmlx Grid Directive Auto Update mode', function () {
 
-    var fakeServiceBaseUrl = 'http://fakeServer/';
-    var dataUrl = fakeServiceBaseUrl + 'api/GridService/country';
+    var dataUrl = 'api/GridService/country';
 
     var element,
-        scope, gridData, compile, deferred, q,interval;
+        scope, gridData, compile, deferred, q, interval;
     var jsArrayData = {'rows': [
         {'id': 1, 'data': [1, 'india', 'asia']},
         {'id': 2, 'data': [2, 'pakistan', 'asia']},
         {'id': 3, 'data': [3, 'srilanka', 'asia']}
     ]};
-    var jsArrayDataUpdated=
+    var jsArrayDataUpdated =
     {'rows': [
         {'id': 1, 'data': [1, 'india', 'asia']},
         {'id': 2, 'data': [2, 'pakistan', 'asia']},
@@ -185,28 +184,29 @@ describe('Dhtmlx Grid Directive Auto Update mode', function () {
 
 
     // load the directive's module
-    beforeEach(angular.mock.module('cgGrid.service'));
+    beforeEach(angular.mock.module('cgGrid.gridFactory'));
     beforeEach(module('cgGrid.dhtmlxGrid'));
 
     beforeEach(function () {
         module(function ($provide) {
 
-            var mockGridService = {getData: function () {
+            var mockGridFactory = {getData: function () {
                 deferred = q.defer();
-                deferred.resolve(mockResponse);
+                mockGridFactory.data = mockResponse.data
+                deferred.resolve(mockGridFactory.data);
                 return deferred.promise;
             }};
-            $provide.value('GridService', mockGridService);
+            $provide.value('GridFactory', mockGridFactory);
         });
     });
 
-    beforeEach(inject(function ($rootScope, $compile, $q,GridConfig,_$interval_) {
+    beforeEach(inject(function ($rootScope, $compile, $q, GridConfig, _$interval_) {
         scope = $rootScope.$new();
         compile = $compile;
         q = $q;
-        interval=_$interval_;
-        GridConfig.autoUpdate=true;
-        GridConfig.autoUpdateInterval=10000;
+        interval = _$interval_;
+        GridConfig.autoUpdate = true;
+        GridConfig.autoUpdateInterval = 10000;
 
     }));
 
@@ -216,14 +216,15 @@ describe('Dhtmlx Grid Directive Auto Update mode', function () {
         scope.$digest();
 
     }
+
     it('should render grid initialized from remote config and data and auto update on data changes', function () {
 
         initializeGridRemotely();
         verifyRowsAndColumns();
-        mockResponse.data.data=jsArrayDataUpdated;
+        mockResponse.data.data = jsArrayDataUpdated;
         interval.flush(10000);
         verifyRowsAndColumnsAfterUpdate();
-        var isolateScope=element.scope();
+        var isolateScope = element.scope();
         isolateScope.$destroy();
 
     });
@@ -235,6 +236,7 @@ describe('Dhtmlx Grid Directive Auto Update mode', function () {
         expect(columnCount).toEqual(3);
 
     }
+
     function verifyRowsAndColumnsAfterUpdate() {
         var rowCount = jQuery(element).find('div.objbox table tbody tr').length;
         var columnCount = jQuery(element).find('div.objbox table tbody tr:first th').length;

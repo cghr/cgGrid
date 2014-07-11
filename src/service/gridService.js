@@ -1,15 +1,23 @@
-angular.module('cgGrid.service', ['cgGrid.config'])
-    .factory('GridService', function (GridConfig, $http, $location) {
+angular.module('cgGrid.gridFactory', ['cgGrid.config'])
+    .factory('GridFactory', function GridFactory(GridConfig, $http, $location, $log) {
 
-        function getData() {
-            var gridBaseUrl = GridConfig.getGridServiceBaseUrl()
-            var currentLocation = $location.url()
+        GridFactory.data = {}
 
-            var dataUrl = gridBaseUrl + currentLocation
-            return $http.get(dataUrl)
+        GridFactory.getData = function () {
+
+            var dataUrl = GridConfig.getGridServiceBaseUrl + $location.url()
+
+            function success(data) {
+                GridFactory.data = data
+            }
+
+            function err() {
+                $log.error('Failed to fetch data for ' + dataUrl)
+            }
+
+            return $http.get(dataUrl).success(success).error(err)
         }
 
-        return {
-            getData: getData
-        }
+        return GridFactory
+
     })

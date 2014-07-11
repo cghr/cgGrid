@@ -1,5 +1,5 @@
-angular.module('cgGrid.autoUpdateRunner', ['cgGrid.service'])
-    .factory('AutoUpdateRunner', function ($log, $interval, GridService) {
+angular.module('cgGrid.autoUpdateRunner', ['cgGrid.gridFactory'])
+    .factory('AutoUpdateRunner', function ($log, $interval, GridFactory) {
 
         function startAutoUpdate(scope, config) {
 
@@ -12,18 +12,17 @@ angular.module('cgGrid.autoUpdateRunner', ['cgGrid.service'])
             }, updateInterval)
 
         }
+        
 
         function checkForUpdates(scope) {
 
             $log.info('checking for updates')
-            var done = function (resp) {
-                var httpResp = resp.data
-                scope.gridRows = httpResp.data.rows.length
+
+            function success() {
+                scope.gridRows = (GridFactory.data).data.rows.length
             }
-            var fail = function () {
-                $log.error('Error while fetching data ')
-            }
-            GridService.getData().then(done, fail)
+
+            GridFactory.getData().then(success)
 
         }
 
