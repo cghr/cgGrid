@@ -1,4 +1,4 @@
-angular.module('cgGrid.dhtmlxGrid', ['cgGrid.config', 'cgGrid.jsonUtil', 'cgGrid.GridUtil', 'cgGrid.lodash', 'cgGrid.autoUpdateRunner'])
+angular.module('cgGrid.dhtmlxGrid', ['cgGrid.config', 'cgGrid.jsonUtil', 'cgGrid.gridUtil', 'cgGrid.lodash', 'cgGrid.autoUpdateRunner'])
     .directive('dhtmlxGrid', function (GridConfig, $compile, JsonUtil, $interval, $log, GridUtil, AutoUpdateRunner, _) {
 
 

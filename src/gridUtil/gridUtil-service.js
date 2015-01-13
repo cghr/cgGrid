@@ -1,7 +1,8 @@
-angular.module('cgGrid.GridUtil', ['cgGrid.gridFactory', 'cgGrid.jsonUtil'])
+angular.module('cgGrid.gridUtil', ['cgGrid.gridFactory', 'cgGrid.jsonUtil'])
     .factory('GridUtil', function (GridFactory, $compile, JsonUtil) {
 
         function renderGrid(config, scope) {
+
 
             config.gridElement.style.height = config.height
             config.gridElement.style.width = config.width
@@ -9,17 +10,17 @@ angular.module('cgGrid.GridUtil', ['cgGrid.gridFactory', 'cgGrid.jsonUtil'])
 
             var grid = new dhtmlXGridObject(config.gridElement)
 
-            with (grid) {
-                setImagePath(config.imagePath)
-                enablePaging(config.paging, config.recordsPerPage, 5, config.pagingElement, true)
-                setPagingSkin(config.pagingSkin)
-                setSkin(config.skin)
-                setHeader(config.headings)
-                attachHeader(config.filters)
-                setColSorting(config.sortings || '')
-                init()
-                parse(config.data, 'json')
-            }
+
+            grid.setImagePath(config.imagePath)
+            grid.enablePaging(config.paging, config.recordsPerPage, 5, config.pagingElement, true)
+            grid.setPagingSkin(config.pagingSkin)
+            grid.setSkin(config.skin)
+            grid.setHeader(config.headings)
+            grid.attachHeader(config.filters)
+            grid.setColSorting(config.sortings || '')
+            grid.init()
+            grid.parse(config.data, 'json')
+
 
             $compile(angular.element(config.gridElement).contents())(scope)
         }
@@ -38,6 +39,9 @@ angular.module('cgGrid.GridUtil', ['cgGrid.gridFactory', 'cgGrid.jsonUtil'])
 
         function resolveLocalInitialize(config, scope) {
 
+            
+
+
             _.extend(config, scope.options)
             _.isUndefined(scope.options.data) ? this.remoteInitialize(config, scope) : this.resolveDataFormatAndRenderGrid(config, scope)
 
@@ -45,8 +49,12 @@ angular.module('cgGrid.GridUtil', ['cgGrid.gridFactory', 'cgGrid.jsonUtil'])
 
         function resolveDataFormatAndRenderGrid(config, scope) {
 
-            if (_.isArray(config.data))
-                config.data = {rows: JsonUtil.jsonToArray(config.data)}
+            if (_.isArray(config.data)){
+                _.extend(config,JsonUtil.jsonToArray(config.data));
+              }
+                
+
+                //config.data = {rows: JsonUtil.jsonToArray(config.data)}
 
             this.renderGrid(config, scope)
 

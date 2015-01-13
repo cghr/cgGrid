@@ -17,16 +17,21 @@ describe('Factory: GridFactory', function () {
         httpBackend = _$httpBackend_;
     }));
 
-    it('should  get Data from a Restful GridService', function () {
+    it('should  get Data from a Restful GridService in the required format', function () {
 
         var dataUrl = 'api/GridService' + currentLocation;
-        var mockResp = {username: 'user1', roles: 'user'};
+        var mockResp = [{username: 'user1', roles: 'user'}];
+        
+        var output={headings:'username,roles',filters:'#text_filter,#text_filter',sortings:'str,str',
+        data:{rows:[{id:1,data:['user1','user']}]}
+        }
 
         httpBackend.whenGET(dataUrl).respond(mockResp);
+        
         expect(GridFactory.data).toEqual({})
 
         GridFactory.getData().then(function () {
-            expect(GridFactory.data).toEqual(mockResp)
+            expect(GridFactory.data).toEqual(output)
         })
 
         httpBackend.flush();

@@ -14,7 +14,8 @@ describe('Directive: dhtmlxGrid', function () {
         {id: 2, name: 'pakistan', continent: 'asia'},
         {id: 3, name: 'srilanka', continent: 'asia'}
     ];
-    var mockResponse = {status: 200, data: {headings: 'id,name,continent', filters: '#text_filter,#text_filter,#text_filter', sortings: 'int,str,str', data: jsArrayData }};
+    var mockResponse = {status: 200, data: {headings: 'id,name,continent', filters: '#text_filter,#text_filter,#text_filter', sortings: 'int,str,str', data: standarJSONData }};
+    
 
 
     // load the directive's module
@@ -27,6 +28,7 @@ describe('Directive: dhtmlxGrid', function () {
             var mockGridFactory = {getData: function () {
                 deferred = q.defer();
                 mockGridFactory.data = mockResponse.data
+                mockGridFactory.data.data=jsArrayData;
                 deferred.resolve(mockGridFactory.data);
                 return deferred.promise;
             }};

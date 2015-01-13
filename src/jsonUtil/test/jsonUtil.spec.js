@@ -24,18 +24,24 @@ describe('Service: cgGrid.jsonUtil', function() {
             'password': 'secret3'
         }];
         var usersArray = [{
-            id: 0,
+            id: 1,
             data: ['user1', 'secret1']
         }, {
-            id: 1,
+            id: 2,
             data: ['user2', 'secret2']
         }, {
-            id: 2,
+            id: 3,
             data: ['user3', 'secret3']
         }];
+        var output={
+            headings:'user,password',
+            filters:'#text_filter,#text_filter',
+            sortings:'str,str',
+            data:{rows:usersArray}
+        };
 
 
-        expect(JsonUtil.jsonToArray(users)).toEqual(usersArray);
+        expect(JsonUtil.jsonToArray(users)).toEqual(output);
 
         var countries = [{
             'name': 'india',
